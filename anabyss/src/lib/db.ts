@@ -1,5 +1,10 @@
-// 비지니스 로직과 유틸 함수를 두는 곳 
-// UI 와 직접 관련 없는 코드 
+import { neon } from "@neondatabase/serverless";
 
-// TODO: Neon/Postgres 연결 시 작성
-export {};
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  throw new Error("DATABASE_URL이 설정되지 않았습니다.");
+}
+
+// DB 연결 객체
+export const sql = neon(databaseUrl);
