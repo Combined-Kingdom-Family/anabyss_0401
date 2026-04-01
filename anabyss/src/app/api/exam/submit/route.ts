@@ -1,46 +1,129 @@
-// 제출 데이터 파싱 
-// 답안 유효성 검사
-// 서버 체점
-// exam_result 저장 
-// answer_detail 저장 
-// resultid 반환 
-// * 프론트에서 보낸 점수를 믿지 않고 서버에서 정답과 비료할 것 
-
 import { NextResponse } from "next/server";
-import { validateSubmitExamPayload } from "@/lib/validations";
-import { scoreExam } from "@/lib/scoring";
+import { questions } from "@/data/questions";
 import type { SubmitExamRequest } from "@/types/exam";
+import {
+  findExamSessionById,
+  markExamSessionSubmitted,
+} from "@/lib/queries/examSession";
+import {
+  createAnswerDetails,
+  createExamResult,
+} from "@/lib/queries/examResult";
+import { calculateOverallScore } from "@/lib/scoring";
 
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as SubmitExamRequest;
 
-    const error = validateSubmitExamPayload(body);
-    if (error) {
+    const userId = body.userId;
+    const sessionId = body.sessionId;
+    const startedAt = body.startedAt;
+    const answers = body.answers ?? {};
+
+    if (!userId) {
       return NextResponse.json(
-        { success: false, message: error },
-        { status: 400 },
+        { success: false, message: "userId가 필요합니다." },
+        { status: 400 }
       );
     }
 
-    const scored = scoreExam({
-      userId: body.userId,
-      startedAt: body.startedAt,
-      answers: body.answers,
+    if (!sessionId) {
+      return NextResponse.json(
+        { success: false, message: "sessionId가 필요합니다." },
+        { status: 400 }
+      );
+    }
+
+    if (!startedAt) {
+      return NextResponse.json(
+        { success: false, message: "startedAt이 필요합니다." },
+        { status: 400 }
+      );
+    }
+
+    const session = await findExamSessionById(sessionId);
+
+    if (!session) {
+      return NextResponse.json(
+        { success: false, message: "시험 세션을 찾을 수 없습니다." },
+        { status: 404 }
+      );
+    }
+
+    if (session.userId !== userId) {
+      return NextResponse.json(
+        { success: false, message: "세션 사용자 정보가 일치하지 않습니다." },
+        { status: 403 }
+      );
+    }
+
+    if (session.status === "submitted") {
+      return NextResponse.json(
+        { success: false, message: "이미 제출된 시험입니다." },
+        { status: 400 }
+      );
+    }
+
+    const answerDetails = questions.map((question) => {
+      const selectedAnswerRaw = answers[question.id];
+      const selectedAnswer =
+        typeof selectedAnswerRaw === "number" ? selectedAnswerRaw : null;
+
+      const isCorrect = selectedAnswer === question.answer;
+
+      return {
+        questionId: question.id,
+        selectedAnswer,
+        isCorrect,
+      };
     });
 
-    // TODO: 나중에 DB 연결 시 exam_results, answer_details 저장
-    const mockResultId = Date.now();
+    const overall = calculateOverallScore(answers);
+
+    const totalQuestions = overall.totalQuestions;
+    const correctCount = overall.correctCount;
+    const score = overall.score;
+
+    const startedAtMs = new Date(startedAt).getTime();
+    const submittedAtMs = Date.now();
+    const durationSeconds = Math.max(
+      0,
+      Math.floor((submittedAtMs - startedAtMs) / 1000)
+    );
+
+    const result = await createExamResult({
+      userId,
+      sessionId,
+      score,
+      totalQuestions,
+      correctCount,
+      durationSeconds,
+    });
+
+    await createAnswerDetails({
+      resultId: result.id,
+      details: answerDetails,
+    });
+
+    await markExamSessionSubmitted(sessionId);
 
     return NextResponse.json({
       success: true,
-      resultId: mockResultId,
-      ...scored,
+      resultId: result.id,
+      resultPublicId: result.publicId,
+      score,
+      correctCount,
+      totalQuestions,
     });
-  } catch {
+  } catch (error) {
+    console.error("exam/submit error:", error);
+
     return NextResponse.json(
-      { success: false, message: "제출 처리 중 오류가 발생했습니다." },
-      { status: 500 },
+      {
+        success: false,
+        message: "시험 제출 처리 중 오류가 발생했습니다.",
+      },
+      { status: 500 }
     );
   }
 }

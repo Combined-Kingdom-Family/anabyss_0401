@@ -1,12 +1,25 @@
 import { NextResponse } from "next/server";
-import type { StartExamRequest, User } from "@/types/user";
+import type { StartExamRequest } from "@/types/user";
 import { validateNickname, validateUserNumber } from "@/lib/validations";
+import { findOrCreateUser } from "@/lib/queries/user";
+import {
+  createExamSession,
+  findInProgressSessionByUserId,
+} from "@/lib/queries/examSession";
+import { findLatestExamResultByUserId } from "@/lib/queries/examResult";
+
+const EXAM_NUMBER = 20;
+const EXAM_DURATION_SECONDS = EXAM_NUMBER * 60 * 1.5;
 
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as StartExamRequest;
 
-    const nicknameError = validateNickname(body.nickname);
+    const nickname = body.nickname?.trim() ?? "";
+    const userNumber = body.userNumber?.trim() ?? "";
+    const agreedToPolicy = body.agreedToPolicy;
+
+    const nicknameError = validateNickname(nickname);
     if (nicknameError) {
       return NextResponse.json(
         { success: false, message: nicknameError },
@@ -14,7 +27,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const userNumberError = validateUserNumber(body.userNumber);
+    const userNumberError = validateUserNumber(userNumber);
     if (userNumberError) {
       return NextResponse.json(
         { success: false, message: userNumberError },
@@ -22,31 +35,63 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!body.agreedToPolicy) {
+    if (!agreedToPolicy) {
       return NextResponse.json(
         { success: false, message: "안내사항에 동의해주세요." },
         { status: 400 }
       );
     }
 
-    const now = new Date().toISOString();
+    const user = await findOrCreateUser({
+      nickname,
+      userNumber,
+    });
 
-    const user: User = {
-      id: Date.now(), // 나중에는 DB에서 생성된 id
-      nickname: body.nickname.trim(),
-      userNumber: body.userNumber.trim(),
-      createdAt: now,
-    };
+    // 1. 진행 중 세션 확인
+    const inProgressSession = await findInProgressSessionByUserId(user.id);
+
+    if (inProgressSession) {
+      return NextResponse.json({
+        success: true,
+        mode: "resume_exam",
+        user,
+        session: inProgressSession,
+      });
+    }
+
+    // 2. 제출된 최신 결과 확인
+    const latestResult = await findLatestExamResultByUserId(user.id);
+
+    if (latestResult) {
+      return NextResponse.json({
+        success: true,
+        mode: "go_result",
+        user,
+        resultPublicId: latestResult.publicId,
+      });
+    }
+
+    // 3. 둘 다 없으면 새 시험 시작
+    const newSession = await createExamSession({
+      userId: user.id,
+      remainingSeconds: EXAM_DURATION_SECONDS,
+    });
 
     return NextResponse.json({
       success: true,
+      mode: "start_exam",
       user,
-      startedAt: now,
+      session: newSession,
     });
-  } catch {
+  } catch (error) {
+    console.error("exam/start error:", error);
+
     return NextResponse.json(
-      { success: false, message: "잘못된 요청입니다." },
-      { status: 400 }
+      {
+        success: false,
+        message: "시험 시작 처리 중 오류가 발생했습니다.",
+      },
+      { status: 500 }
     );
   }
 }

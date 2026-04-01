@@ -4,6 +4,12 @@ import { useState } from "react";
 import type { StartExamRequest } from "@/types/user";
 import { validateNickname, validateUserNumber } from "@/lib/validations";
 
+export type StartExamFlowResult =
+  | { ok: false }
+  | { ok: true; mode: "play_only" }
+  | { ok: true; mode: "go_exam" }
+  | { ok: true; mode: "go_result"; resultPublicId: string };
+
 export function useLandingForm() {
   const [nickname, setNickname] = useState("");
   const [userNumber, setUserNumber] = useState("");
@@ -22,7 +28,8 @@ export function useLandingForm() {
   const nicknameValidationMessage = validateNickname(nickname);
   const userNumberValidationMessage = validateUserNumber(userNumber);
 
-  const isNicknameValid = nickname.trim() !== "" && !nicknameValidationMessage;
+  const isNicknameValid =
+    nickname.trim() !== "" && !nicknameValidationMessage;
   const isUserNumberValid =
     userNumber.trim() !== "" && !userNumberValidationMessage;
 
@@ -60,8 +67,7 @@ export function useLandingForm() {
     }
   };
 
-  // 성공하면 true, 실패하면 false 반환
-  const handleStartExam = async () => {
+  const handleStartExam = async (): Promise<StartExamFlowResult> => {
     const nextNicknameError = validateNickname(nickname) ?? "";
     const nextUserNumberError = validateUserNumber(userNumber) ?? "";
     const nextPolicyError = !agreedToPolicy
@@ -77,7 +83,7 @@ export function useLandingForm() {
     setSubmitError("");
 
     if (nextNicknameError || nextUserNumberError || nextPolicyError) {
-      return false;
+      return { ok: false };
     }
 
     const requestData: StartExamRequest = {
@@ -103,21 +109,57 @@ export function useLandingForm() {
         setSubmitError(
           data.message || "시험 시작에 실패했습니다. 다시 시도해주세요."
         );
-        return false;
+        return { ok: false };
       }
 
-      localStorage.setItem(
-        "examStartInfo",
-        JSON.stringify({
-          user: data.user,
-          startedAt: data.startedAt,
-        })
-      );
+      /**
+       * 서버 응답 예시
+       * 1) 새 시험 or 이어하기
+       * {
+       *   success: true,
+       *   mode: "start_exam" | "resume_exam",
+       *   user: {...},
+       *   session: {...}
+       * }
+       *
+       * 2) 이미 제출한 사용자
+       * {
+       *   success: true,
+       *   mode: "go_result",
+       *   user: {...},
+       *   resultPublicId: "uuid..."
+       * }
+       */
 
-      return true;
-    } catch {
+      if (data.mode === "go_result") {
+        return {
+          ok: true,
+          mode: "go_result",
+          resultPublicId: data.resultPublicId,
+        };
+      }
+
+      if (data.mode === "start_exam" || data.mode === "resume_exam") {
+        localStorage.setItem(
+          "examStartInfo",
+          JSON.stringify({
+            user: data.user,
+            session: data.session,
+          })
+        );
+
+        return {
+          ok: true,
+          mode: "go_exam",
+        };
+      }
+
+      setSubmitError("알 수 없는 응답 형식입니다.");
+      return { ok: false };
+    } catch (error) {
+      console.error("handleStartExam error:", error);
       setSubmitError("시험 시작 중 오류가 발생했습니다. 다시 시도해주세요.");
-      return false;
+      return { ok: false };
     } finally {
       setIsSubmitting(false);
     }

@@ -1,45 +1,63 @@
 "use client";
 
-// <추가 항목>
-// 문제 번호 목록 이동
-// 임시 저장 배지
-// 미응답 문제 표시
-// 자동 제출 경고
-
-
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getPublicQuestions } from "@/data/questions";
 import type {
   ExamAnswerMap,
+  ExamSessionInfo,
   ExamStartInfo,
-  ExamState,
   SubmitExamRequest,
 } from "@/types/exam";
 
-const EXAM_NUMBER = 7;
+const EXAM_NUMBER = 20;
 const EXAM_DURATION_SECONDS = EXAM_NUMBER * 60 * 1.5;
+
+function toAnswerMap(
+  answersJson: Record<string, number> | undefined
+): ExamAnswerMap {
+  return Object.fromEntries(
+    Object.entries(answersJson ?? {}).map(([key, value]) => [Number(key), value])
+  );
+}
 
 export function useExamSession() {
   const router = useRouter();
   const questions = useMemo(() => getPublicQuestions(), []);
 
   const [userId, setUserId] = useState<number | null>(null);
+  const [sessionId, setSessionId] = useState<number | null>(null);
   const [startedAt, setStartedAt] = useState("");
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<ExamAnswerMap>({});
   const [remainingSeconds, setRemainingSeconds] = useState(EXAM_DURATION_SECONDS);
-  const [hasPlayedTenMinuteWarning, setHasPlayedTenMinuteWarning] = useState(false);
-
+  const [hasPlayedTenMinuteWarning, setHasPlayedTenMinuteWarning] =
+    useState(false);
 
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const [isRestored, setIsRestored] = useState(false);
 
-  // 1. examStartInfo 읽기
+  const saveTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const autoSubmitTriggeredRef = useRef(false);
+
+  const getRemainingSecondsFromStartedAt = (startedAtValue: string) => {
+    const startedAtMs = new Date(startedAtValue).getTime();
+
+    if (Number.isNaN(startedAtMs)) {
+      return EXAM_DURATION_SECONDS;
+    }
+
+    const endTimeMs = startedAtMs + EXAM_DURATION_SECONDS * 1000;
+    const nowMs = Date.now();
+    const diffSeconds = Math.floor((endTimeMs - nowMs) / 1000);
+
+    return Math.max(0, diffSeconds);
+  };
+
+  // 1. examStartInfo 읽어서 서버 세션 기준으로 복구
   useEffect(() => {
     const raw = localStorage.getItem("examStartInfo");
 
@@ -50,64 +68,138 @@ export function useExamSession() {
 
     try {
       const parsed = JSON.parse(raw) as ExamStartInfo;
+      const session: ExamSessionInfo = parsed.session;
+
+      const restoredAnswers = toAnswerMap(session.answersJson);
+      const calculatedRemainingSeconds = getRemainingSecondsFromStartedAt(
+        session.startedAt
+      );
+
       setUserId(parsed.user.id);
-      setStartedAt(parsed.startedAt);
+      setSessionId(session.id);
+      setStartedAt(session.startedAt);
+      setCurrentIndex(session.currentIndex ?? 0);
+      setAnswers(restoredAnswers);
+
+      // 서버 저장값보다 실제 시간 기준을 우선
+      setRemainingSeconds(calculatedRemainingSeconds);
+
+      setHasPlayedTenMinuteWarning(session.hasPlayedTenMinuteWarning ?? false);
+
+      setIsRestored(true);
     } catch {
       router.push("/");
     }
   }, [router]);
 
-  // 2. examState 복구
-  useEffect(() => {
-    const raw = localStorage.getItem("examState");
-
-    if (raw) {
-      try {
-        const parsed = JSON.parse(raw) as ExamState;
-
-        setCurrentIndex(parsed.currentIndex ?? 0);
-        setAnswers(parsed.answers ?? {});
-        setRemainingSeconds(parsed.remainingSeconds ?? EXAM_DURATION_SECONDS);
-        setHasPlayedTenMinuteWarning(parsed.hasPlayedTenMinuteWarning ?? false);
-      } catch {
-        // 복구 실패 시 무시
-      }
-    }
-
-    // 복구 시도 자체가 끝났음을 표시
-    setIsRestored(true);
-  }, []);
-
-  // 3. 복구 끝난 뒤에만 저장
+  // 2. localStorage 보조 저장
   useEffect(() => {
     if (!isRestored) return;
+    if (!userId || !sessionId) return;
 
-    const state: ExamState = {
-      currentIndex,
-      answers,
-      remainingSeconds,
-      hasPlayedTenMinuteWarning, 
+    const raw = localStorage.getItem("examStartInfo");
+    if (!raw) return;
+
+    try {
+      const parsed = JSON.parse(raw) as ExamStartInfo;
+
+      localStorage.setItem(
+        "examStartInfo",
+        JSON.stringify({
+          ...parsed,
+          session: {
+            ...parsed.session,
+            id: sessionId,
+            userId,
+            startedAt,
+            currentIndex,
+            answersJson: answers,
+            remainingSeconds,
+            hasPlayedTenMinuteWarning,
+          },
+        })
+      );
+    } catch {
+      // 무시
+    }
+  }, [
+    isRestored,
+    userId,
+    sessionId,
+    startedAt,
+    currentIndex,
+    answers,
+    remainingSeconds,
+    hasPlayedTenMinuteWarning,
+  ]);
+
+  // 3. DB 진행 상태 저장 (너무 자주 저장하지 않도록 debounce)
+  useEffect(() => {
+    if (!isRestored) return;
+    if (!sessionId) return;
+    if (isSubmitting) return;
+
+    if (saveTimerRef.current) {
+      clearTimeout(saveTimerRef.current);
+    }
+
+    saveTimerRef.current = setTimeout(async () => {
+      try {
+        await fetch("/api/exam/save-progress", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            sessionId,
+            currentIndex,
+            answers,
+            remainingSeconds,
+            hasPlayedTenMinuteWarning,
+          }),
+        });
+      } catch (error) {
+        console.error("save-progress failed:", error);
+      }
+    }, 500);
+
+    return () => {
+      if (saveTimerRef.current) {
+        clearTimeout(saveTimerRef.current);
+      }
     };
+  }, [
+    isRestored,
+    sessionId,
+    currentIndex,
+    answers,
+    remainingSeconds,
+    hasPlayedTenMinuteWarning,
+    isSubmitting,
+  ]);
 
-    localStorage.setItem("examState", JSON.stringify(state));
-  }, [isRestored, currentIndex, answers, remainingSeconds, hasPlayedTenMinuteWarning]);
-
-  // 4. 타이머 시작
+  // 4. 정확한 타이머: startedAt 기준으로 남은 시간 재계산
   useEffect(() => {
     if (!startedAt) return;
     if (!isRestored) return;
     if (isSubmitting) return;
 
-    const timer = setInterval(() => {
-      setRemainingSeconds((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          handleSubmit(true);
-          return 0;
-        }
+    const updateRemainingSeconds = () => {
+      const nextRemainingSeconds = getRemainingSecondsFromStartedAt(startedAt);
 
-        return prev - 1;
-      });
+      setRemainingSeconds(nextRemainingSeconds);
+
+      if (nextRemainingSeconds <= 0 && !autoSubmitTriggeredRef.current) {
+        autoSubmitTriggeredRef.current = true;
+        void handleSubmit(true);
+      }
+    };
+
+    // 진입 직후 즉시 보정
+    updateRemainingSeconds();
+
+    const timer = setInterval(() => {
+      updateRemainingSeconds();
     }, 1000);
 
     return () => clearInterval(timer);
@@ -146,7 +238,7 @@ export function useExamSession() {
   };
 
   const handleSubmit = async (isAutoSubmit = false) => {
-    if (!userId || !startedAt) return false;
+    if (!userId || !sessionId || !startedAt) return false;
 
     try {
       setIsSubmitting(true);
@@ -154,6 +246,7 @@ export function useExamSession() {
 
       const payload: SubmitExamRequest = {
         userId,
+        sessionId,
         startedAt,
         answers,
         isAutoSubmit,
@@ -171,16 +264,16 @@ export function useExamSession() {
 
       if (!response.ok) {
         setSubmitError(data.message || "시험 제출에 실패했습니다.");
+        autoSubmitTriggeredRef.current = false;
         return false;
       }
 
-      localStorage.removeItem("examState");
       localStorage.removeItem("examStartInfo");
-
-      router.push(`/result/${data.resultId}`);
+      router.push(`/result/${data.resultPublicId}`);
       return true;
     } catch {
       setSubmitError("제출 중 오류가 발생했습니다.");
+      autoSubmitTriggeredRef.current = false;
       return false;
     } finally {
       setIsSubmitting(false);
@@ -196,18 +289,18 @@ export function useExamSession() {
     answeredCount,
 
     hasPlayedTenMinuteWarning,
-    
+    markTenMinuteWarningPlayed,
+
     isSubmitModalOpen,
     submitError,
     isSubmitting,
     isRestored,
-    
+
     handleSelectAnswer,
     handlePrevQuestion,
     handleNextQuestion,
     openSubmitModal,
     closeSubmitModal,
     handleSubmit,
-    markTenMinuteWarningPlayed,
   };
 }

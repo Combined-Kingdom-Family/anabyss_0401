@@ -1,10 +1,40 @@
+export type ExamArea = "검불시" | "1부" | "2부" | "3부";
+
+export type QuestionType = "multiple";
+
+export type Question = {
+  id: number;
+  area: ExamArea;
+  type: QuestionType;
+  questionText: string;
+  imageUrl?: string;
+  choices: string[];
+  answer: number;
+};
+
+export type PublicQuestion = Omit<Question, "answer">;
+
 export type ExamAnswerMap = Record<number, number>;
 
-export type ExamState = {
+export type AreaScoreSummary = {
+  area: ExamArea;
+  totalQuestions: number;
+  correctCount: number;
+  wrongCount: number;
+  score: number;
+  grade: number;
+};
+
+export type ExamSessionInfo = {
+  id: number;
+  userId: number;
+  startedAt: string;
   currentIndex: number;
-  answers: ExamAnswerMap;
+  answersJson: Record<string, number>;
   remainingSeconds: number;
   hasPlayedTenMinuteWarning: boolean;
+  status: string;
+  updatedAt: string;
 };
 
 export type ExamStartInfo = {
@@ -14,12 +44,13 @@ export type ExamStartInfo = {
     userNumber: string;
     createdAt: string;
   };
-  startedAt: string;
+  session: ExamSessionInfo;
 };
 
 export type SubmitExamRequest = {
   userId: number;
+  sessionId: number;
   startedAt: string;
-  answers: ExamAnswerMap;
+  answers: Record<number, number>;
   isAutoSubmit?: boolean;
 };
