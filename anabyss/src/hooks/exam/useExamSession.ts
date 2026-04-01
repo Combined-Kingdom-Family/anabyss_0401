@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getPublicQuestions } from "@/data/questions";
 import type {
@@ -56,6 +56,50 @@ export function useExamSession() {
 
     return Math.max(0, diffSeconds);
   };
+
+  const handleSubmit = useCallback(async (isAutoSubmit = false) => {
+    if (!userId || !sessionId || !startedAt) return false;
+
+    try {
+      setIsSubmitting(true);
+      setSubmitError("");
+
+      const payload: SubmitExamRequest = {
+        userId,
+        sessionId,
+        startedAt,
+        answers,
+        isAutoSubmit,
+      };
+
+      const response = await fetch("/api/exam/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setSubmitError(data.message || "시험 제출에 실패했습니다.");
+        autoSubmitTriggeredRef.current = false;
+        return false;
+      }
+
+      localStorage.removeItem("examStartInfo");
+      router.push(`/result/${data.resultPublicId}`);
+      return true;
+    } catch {
+      setSubmitError("제출 중 오류가 발생했습니다.");
+      autoSubmitTriggeredRef.current = false;
+      return false;
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [userId, sessionId, startedAt, answers, router]);
+
 
   // 1. examStartInfo 읽어서 서버 세션 기준으로 복구
   useEffect(() => {
@@ -195,7 +239,6 @@ export function useExamSession() {
       }
     };
 
-    // 진입 직후 즉시 보정
     updateRemainingSeconds();
 
     const timer = setInterval(() => {
@@ -203,7 +246,7 @@ export function useExamSession() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [startedAt, isRestored, isSubmitting]);
+  }, [startedAt, isRestored, isSubmitting, handleSubmit]);
 
   const currentQuestion = questions[currentIndex];
   const answeredCount = Object.keys(answers).length;
@@ -235,49 +278,6 @@ export function useExamSession() {
 
   const markTenMinuteWarningPlayed = () => {
     setHasPlayedTenMinuteWarning(true);
-  };
-
-  const handleSubmit = async (isAutoSubmit = false) => {
-    if (!userId || !sessionId || !startedAt) return false;
-
-    try {
-      setIsSubmitting(true);
-      setSubmitError("");
-
-      const payload: SubmitExamRequest = {
-        userId,
-        sessionId,
-        startedAt,
-        answers,
-        isAutoSubmit,
-      };
-
-      const response = await fetch("/api/exam/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setSubmitError(data.message || "시험 제출에 실패했습니다.");
-        autoSubmitTriggeredRef.current = false;
-        return false;
-      }
-
-      localStorage.removeItem("examStartInfo");
-      router.push(`/result/${data.resultPublicId}`);
-      return true;
-    } catch {
-      setSubmitError("제출 중 오류가 발생했습니다.");
-      autoSubmitTriggeredRef.current = false;
-      return false;
-    } finally {
-      setIsSubmitting(false);
-    }
   };
 
   return {
