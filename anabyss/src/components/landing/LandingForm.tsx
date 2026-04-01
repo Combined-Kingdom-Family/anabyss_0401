@@ -122,8 +122,9 @@ export default function LandingForm() {
     <>
       {/* 안내 모달 */}
       {isNoticeOpen ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/35 px-4 py-6 backdrop-blur-[2px]">
-          <div className="w-full max-w-[44rem] rounded-[28px] border border-slate-200/80 bg-white px-6 py-6 shadow-[0_24px_70px_rgba(15,23,42,0.18)] sm:px-7 sm:py-7">
+      <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/35 px-3 py-4 backdrop-blur-[2px] sm:px-4 sm:py-6">
+        <div className="flex min-h-full items-start justify-center sm:items-center">
+          <div className="w-full max-w-[44rem] max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-[24px] border border-slate-200/80 bg-white px-4 py-4 shadow-[0_24px_70px_rgba(15,23,42,0.18)] sm:max-h-[calc(100dvh-3rem)] sm:rounded-[28px] sm:px-7 sm:py-7"></div>
             <div className="mb-5">
               <div className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold tracking-[0.02em] text-slate-600">
                 안내
