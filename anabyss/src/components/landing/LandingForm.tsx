@@ -122,86 +122,87 @@ export default function LandingForm() {
     <>
       {/* 안내 모달 */}
       {isNoticeOpen ? (
-      <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/35 px-3 py-4 backdrop-blur-[2px] sm:px-4 sm:py-6">
-        <div className="flex min-h-full items-start justify-center sm:items-center">
-          <div className="w-full max-w-[44rem] max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-[24px] border border-slate-200/80 bg-white px-4 py-4 shadow-[0_24px_70px_rgba(15,23,42,0.18)] sm:max-h-[calc(100dvh-3rem)] sm:rounded-[28px] sm:px-7 sm:py-7"></div>
-            <div className="mb-5">
-              <div className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold tracking-[0.02em] text-slate-600">
-                안내
-              </div>
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/35 px-3 py-4 backdrop-blur-[2px] sm:px-4 sm:py-6">
+          <div className="flex min-h-full items-start justify-center sm:items-center">
+            <div className="w-full max-w-[44rem] max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-[24px] border border-slate-200/80 bg-white px-4 py-4 shadow-[0_24px_70px_rgba(15,23,42,0.18)] sm:max-h-[calc(100dvh-3rem)] sm:rounded-[28px] sm:px-7 sm:py-7">
+              <div className="mb-5">
+                <div className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold tracking-[0.02em] text-slate-600">
+                  안내
+                </div>
 
-              <h2 className="mt-3 text-[clamp(1.4rem,2.4vw,1.8rem)] font-bold tracking-[-0.03em] text-slate-900">
-                시험 안내 및 정보 이용 동의
-              </h2>
+                <h2 className="mt-3 text-[clamp(1.4rem,2.4vw,1.8rem)] font-bold tracking-[-0.03em] text-slate-900">
+                  시험 안내 및 정보 이용 동의
+                </h2>
 
-              <p className="mt-2 text-[clamp(1rem,1.4vw,1.15rem)] leading-6 text-slate-600 sm:text-[0.98rem]">
-                시험을 시작하기 전에 아래 내용을 반드시 확인해 주세요. 확인을 완료한 뒤에만
-                성명 및 수험번호 입력과 시험 시작이 가능합니다.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4 sm:p-5">
-              <ul className="space-y-3 text-[clamp(1rem,1.4vw,1.15rem)] leading-6 text-slate-700 sm:text-[0.98rem]">
-                <li>
-                  • 입력한 성명과 수험번호는 시험 진행, 응시자 식별 및 결과 확인을 위해
-                  사용됩니다.
-                </li>
-                <li>• 시험 시작 시 안내 음성이 재생될 수 있습니다.</li>
-                <li>
-                  • 시험 진행 상태(문항, 답안, 남은 시간 등)는 복구를 위해 저장될 수
-                  있습니다.
-                </li>
-                <li>
-                  • 이미 시험을 제출한 경우, 동일한 정보로 재접속 시 결과 화면으로 이동할
-                  수 있습니다.
-                </li>
-                <li>
-                  • 응시 결과는 개인을 식별할 수 없는 형태로 통계 처리되어, 랭킹, 전체
-                  응시자 수, 영역별 성적 요약 정보 제공에 활용될 수 있습니다.
-                </li>
-              </ul>
-
-              <div className="mt-4 rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3">
-                <p className="text-[clamp(1rem,1.4vw,1.15rem)] leading-6 text-indigo-900 sm:text-[0.97rem]">
-                  <span className="font-semibold">
-                    ※ 본 시험은 이벤트용 서비스로 실제 개인정보 수집을 목적으로 하지
-                    않습니다.
-                  </span>
-                  <br />
-                  성명 및 수험번호에는{" "}
-                  <span className="font-semibold">닉네임 또는 임의의 값 입력</span>을
-                  권장합니다.
+                <p className="mt-2 text-[clamp(1rem,1.4vw,1.15rem)] leading-6 text-slate-600 sm:text-[0.98rem]">
+                  시험을 시작하기 전에 아래 내용을 반드시 확인해 주세요. 확인을 완료한 뒤에만
+                  성명 및 수험번호 입력과 시험 시작이 가능합니다.
                 </p>
               </div>
-            </div>
 
-            <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-4 transition hover:border-slate-300 hover:bg-slate-50/70">
-              <input
-                type="checkbox"
-                checked={noticeAgreed}
-                onChange={(e) => setNoticeAgreed(e.target.checked)}
-                className="mt-1 h-4 w-4 shrink-0 rounded border-slate-300 text-slate-900 focus:ring-slate-400"
-              />
-              <span className="text-[clamp(1rem,1.4vw,1.15rem)] leading-6 text-slate-700 sm:text-[0.98rem]">
-                위 내용을 모두 확인하였으며, 시험 진행을 위한 정보 이용 및 안내 절차,
-                그리고 통계성 정보 제공 목적의 집계 활용에 동의합니다.
-              </span>
-            </label>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4 sm:p-5">
+                <ul className="space-y-3 text-[clamp(1rem,1.4vw,1.15rem)] leading-6 text-slate-700 sm:text-[0.98rem]">
+                  <li>
+                    • 입력한 성명과 수험번호는 시험 진행, 응시자 식별 및 결과 확인을 위해
+                    사용됩니다.
+                  </li>
+                  <li>• 시험 시작 시 안내 음성이 재생될 수 있습니다.</li>
+                  <li>
+                    • 시험 진행 상태(문항, 답안, 남은 시간 등)는 복구를 위해 저장될 수
+                    있습니다.
+                  </li>
+                  <li>
+                    • 이미 시험을 제출한 경우, 동일한 정보로 재접속 시 결과 화면으로 이동할
+                    수 있습니다.
+                  </li>
+                  <li>
+                    • 응시 결과는 개인을 식별할 수 없는 형태로 통계 처리되어, 랭킹, 전체
+                    응시자 수, 영역별 성적 요약 정보 제공에 활용될 수 있습니다.
+                  </li>
+                </ul>
 
-            <div className="mt-6 flex justify-center">
-              <button
-                type="button"
-                onClick={() =>
-                  runAudioFlow({
-                    src: AUDIO_SOURCES.guide,
-                    beforePlay: handleNoticeConfirmBeforePlay,
-                  })
-                }
-                disabled={!noticeAgreed || isPlaying}
-                className="inline-flex min-w-[9rem] items-center justify-center rounded-full border border-slate-900 bg-slate-900 px-6 py-3 text-[clamp(1rem,1.4vw,1.15rem)] font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:border-slate-300 disabled:bg-slate-200 disabled:text-slate-400 sm:text-base"
-              >
-                확인
-              </button>
+                <div className="mt-4 rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3">
+                  <p className="text-[clamp(1rem,1.4vw,1.15rem)] leading-6 text-indigo-900 sm:text-[0.97rem]">
+                    <span className="font-semibold">
+                      ※ 본 시험은 이벤트용 서비스로 실제 개인정보 수집을 목적으로 하지
+                      않습니다.
+                    </span>
+                    <br />
+                    성명 및 수험번호에는{" "}
+                    <span className="font-semibold">닉네임 또는 임의의 값 입력</span>을
+                    권장합니다.
+                  </p>
+                </div>
+              </div>
+
+              <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-4 transition hover:border-slate-300 hover:bg-slate-50/70">
+                <input
+                  type="checkbox"
+                  checked={noticeAgreed}
+                  onChange={(e) => setNoticeAgreed(e.target.checked)}
+                  className="mt-1 h-4 w-4 shrink-0 rounded border-slate-300 text-slate-900 focus:ring-slate-400"
+                />
+                <span className="text-[clamp(1rem,1.4vw,1.15rem)] leading-6 text-slate-700 sm:text-[0.98rem]">
+                  위 내용을 모두 확인하였으며, 시험 진행을 위한 정보 이용 및 안내 절차,
+                  그리고 통계성 정보 제공 목적의 집계 활용에 동의합니다.
+                </span>
+              </label>
+
+              <div className="mt-6 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() =>
+                    runAudioFlow({
+                      src: AUDIO_SOURCES.guide,
+                      beforePlay: handleNoticeConfirmBeforePlay,
+                    })
+                  }
+                  disabled={!noticeAgreed || isPlaying}
+                  className="inline-flex min-w-[9rem] items-center justify-center rounded-full border border-slate-900 bg-slate-900 px-6 py-3 text-[clamp(1rem,1.4vw,1.15rem)] font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:border-slate-300 disabled:bg-slate-200 disabled:text-slate-400 sm:text-base"
+                >
+                  확인
+                </button>
+              </div>
             </div>
           </div>
         </div>
