@@ -320,7 +320,7 @@ export default function LandingForm() {
 
                           {!phrase && (
                             <span className="pointer-events-none absolute inset-0 flex items-center justify-center px-3 text-[0.86rem] font-medium text-[#6B7280] whitespace-nowrap overflow-hidden text-ellipsis sm:px-4 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]">
-                              듀랜트가 선명하게 오웬을 핥고 있었다
+                              듀랜트가 질척하게 오웬을 핥고 있었다
                             </span>
                           )}
                         </div>
