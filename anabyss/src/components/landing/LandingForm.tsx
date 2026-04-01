@@ -227,7 +227,7 @@ export default function LandingForm() {
                 {/* 타이틀 */}
                 <header className="mb-10 text-center sm:mb-12 lg:mb-14">
                   <p className="text-[clamp(1.3rem,2.2vw,2.1rem)] font-semibold tracking-[-0.02em] text-black">
-                    2026학년도 4월 검불러 사설 모의고사 문제지
+                    2026학년도 4월 검불시 사설 모의고사 문제지
                   </p>
                   <h1 className="mt-4 font-serif text-[clamp(2.8rem,6vw,4.8rem)] font-black tracking-[-0.04em] text-black [text-shadow:0_0_0.5px_rgba(0,0,0,0.8)]">
                     검불시 영역
