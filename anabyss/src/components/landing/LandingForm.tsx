@@ -208,7 +208,7 @@ export default function LandingForm() {
         </div>
       ) : null}
 
-      <main className="min-h-screen bg-[#F1F3FB] px-3 py-3 sm:px-5 sm:py-5 lg:px-6 lg:py-6">
+      <main className="min-h-screen bg-[#F1F3FB] px-2 py-2 sm:px-5 sm:py-5 lg:px-6 lg:py-6">
         <audio ref={audioRef} onEnded={handleEnded} preload="auto" />
 
         <div
@@ -216,34 +216,34 @@ export default function LandingForm() {
             isNoticeOpen ? "pointer-events-none select-none blur-[1.5px]" : ""
           }`}
         >
-          <section className="min-h-[calc(100vh-1.5rem)] border-[1.5px] border-black bg-[#EEF2F9] px-[4.5%] py-[4.5%]">
-            <div className="flex min-h-[calc(100vh-6rem)] flex-col justify-between gap-8">
+          <section className="border-[1.5px] border-black bg-[#EEF2F9] px-[3.5%] py-[4%] sm:min-h-[calc(100vh-1.5rem)] sm:px-[4.5%] sm:py-[4.5%]">
+             <div className="flex flex-col gap-5 sm:min-h-[calc(100vh-6rem)] sm:justify-between sm:gap-8">
               <div>
                 {/* 상단 배지 */}
                 <div className="mb-8 sm:mb-10">
-                  <span className="inline-flex rounded-full border-[1.5px] border-black px-4 py-2 font-serif text-[clamp(1.2rem,1.8vw,1.5rem)] font-black tracking-[-0.02em] text-black">
+                  <span className="inline-flex rounded-full border-[1.5px] border-black px-3 py-1.5 font-serif text-[0.95rem] font-black tracking-[-0.02em] text-black sm:px-4 sm:py-2 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]">
                     만우절 형
                   </span>
                 </div>
 
                 {/* 타이틀 */}
-                <header className="mb-10 text-center sm:mb-12 lg:mb-14">
-                  <p className="text-[clamp(1.3rem,2.2vw,2.1rem)] font-semibold tracking-[-0.02em] text-black">
+                <header className="mb-6 text-center sm:mb-12 lg:mb-14">
+                  <p className="text-[0.9rem] font-semibold tracking-[-0.02em] text-black sm:text-[clamp(1.3rem,2.2vw,2.1rem)]">
                     2026학년도 4월 검불시 사설 모의고사 문제지
                   </p>
-                  <h1 className="mt-4 font-serif text-[clamp(2.8rem,6vw,4.8rem)] font-black tracking-[-0.04em] text-black [text-shadow:0_0_0.5px_rgba(0,0,0,0.8)]">
+                  <h1 className="mt-2 font-serif text-[2.05rem] font-black tracking-[-0.04em] text-black [text-shadow:0_0_0.5px_rgba(0,0,0,0.8)] sm:mt-4 sm:text-[clamp(2.8rem,6vw,4.8rem)]">
                     검불시 영역
                   </h1>
                 </header>
 
                 {/* 입력 영역 */}
-                <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mb-10 lg:gap-8">
+                <div className="mb-6 grid grid-cols-1 gap-3 md:grid-cols-2 lg:mb-10 lg:gap-8">
                   {/* 성명 */}
-                  <div className="flex flex-col gap-2">
-                    <div className="flex min-h-[3.55rem] items-stretch border-[1.5px] border-black">
+                  <div className="flex flex-col gap-1.5 sm:gap-2">
+                    <div className="flex min-h-[3rem] items-stretch border-[1.5px] border-black sm:min-h-[3.55rem]">
                       <label
                         htmlFor="nickname"
-                        className="flex w-[5.8rem] shrink-0 items-center justify-center border-r-[1.5px] border-black bg-[#D6DAE2] px-3 text-[clamp(1.2rem,1.8vw,1.5rem)] font-semibold text-black"
+                        className="flex w-[4.7rem] shrink-0 items-center justify-center border-r-[1.5px] border-black bg-[#D6DAE2] px-2 text-[0.98rem] font-semibold text-black sm:w-[5.8rem] sm:px-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
                       >
                         성명
                       </label>
@@ -254,7 +254,7 @@ export default function LandingForm() {
                         onChange={(e) => handleNicknameChange(e.target.value)}
                         onBlur={handleNicknameBlur}
                         disabled={isNoticeOpen}
-                        className="min-w-0 flex-1 bg-[#EEF2F9] px-4 text-[clamp(1.2rem,1.8vw,1.5rem)] font-medium leading-none text-black outline-none placeholder:text-[#6B7280]"
+                        className="min-w-0 flex-1 bg-[#EEF2F9] px-3 text-[0.98rem] font-medium leading-none text-black outline-none placeholder:text-[#6B7280] sm:px-4 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
                       />
                     </div>
 
@@ -270,11 +270,11 @@ export default function LandingForm() {
                   </div>
 
                   {/* 수험번호 */}
-                  <div className="flex flex-col gap-2">
-                    <div className="flex min-h-[3.55rem] items-stretch border-[1.5px] border-black">
+                  <div className="flex flex-col gap-1.5 sm:gap-2">
+                    <div className="flex min-h-[3rem] items-stretch border-[1.5px] border-black sm:min-h-[3.55rem]">
                       <label
                         htmlFor="userNumber"
-                        className="flex w-[6.8rem] shrink-0 items-center justify-center border-r-[1.5px] border-black bg-[#D6DAE2] px-3 text-[clamp(1.2rem,1.8vw,1.5rem)] font-semibold text-black"
+                        className="flex w-[5.5rem] shrink-0 items-center justify-center border-r-[1.5px] border-black bg-[#D6DAE2] px-2 text-[0.98rem] font-semibold text-black sm:w-[6.8rem] sm:px-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
                       >
                         수험번호
                       </label>
@@ -285,7 +285,7 @@ export default function LandingForm() {
                         onChange={(e) => handleUserNumberChange(e.target.value)}
                         onBlur={handleUserNumberBlur}
                         disabled={isNoticeOpen}
-                        className="min-w-0 flex-1 bg-[#EEF2F9] px-4 text-[clamp(1.2rem,1.8vw,1.5rem)] font-medium leading-none text-black outline-none placeholder:text-[#6B7280]"
+                        className="min-w-0 flex-1 bg-[#EEF2F9] px-3 text-[0.98rem] font-medium leading-none text-black outline-none placeholder:text-[#6B7280] sm:px-4 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
                       />
                     </div>
 
@@ -302,8 +302,8 @@ export default function LandingForm() {
                 </div>
 
                 {/* 안내 박스 1 */}
-                <div className="mb-5 border-[1.5px] border-black px-[5.5%] pt-[5%] pb-[5%] sm:mb-7 lg:mb-9">
-                  <ul className="space-y-8 text-[clamp(1.2rem,1.8vw,1.5rem)] font-medium leading-[2.05] text-black">
+                <div className="mb-4 border-[1.5px] border-black px-[4.5%] py-[4.5%] sm:mb-7 sm:px-[5.5%] sm:pt-[5%] sm:pb-[5%] lg:mb-9">
+                  <ul className="space-y-5 text-[0.98rem] font-medium leading-[1.8] text-black sm:space-y-8 sm:text-[clamp(1.2rem,1.8vw,1.5rem)] sm:leading-[2.05]">
                     <li>• 문제지의 해당란에 성명과 수험 번호를 정확히 쓰시오.</li>
 
                     <li>
@@ -315,11 +315,11 @@ export default function LandingForm() {
                             value={phrase}
                             onChange={(e) => setPhrase(e.target.value)}
                             disabled={isNoticeOpen}
-                            className="w-full border-[1.5px] border-black bg-[#D6DAE2] px-4 py-3 text-[clamp(1.2rem,1.8vw,1.5rem)] font-medium text-black outline-none"
+                            className="w-full border-[1.5px] border-black bg-[#D6DAE2] px-3 py-2.5 text-[0.92rem] font-medium text-black outline-none sm:px-4 sm:py-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
                           />
 
                           {!phrase && (
-                            <span className="pointer-events-none absolute inset-0 flex items-center justify-center px-4 text-[clamp(1.2rem,1.8vw,1.5rem)] font-medium text-[#6B7280]">
+                            <span className="pointer-events-none absolute inset-0 flex items-center justify-center px-3 text-[0.86rem] font-medium text-[#6B7280] whitespace-nowrap overflow-hidden text-ellipsis sm:px-4 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]">
                               듀랜트가 선명하게 오웬을 핥고 있었다
                             </span>
                           )}
@@ -337,12 +337,12 @@ export default function LandingForm() {
                 </div>
 
                 {/* 안내 박스 2 */}
-                <div className="border-[1.5px] border-black px-[5.5%] pt-[5%] pb-[5%]">
-                  <p className="mb-6 text-[clamp(1.2rem,1.8vw,1.5rem)] font-semibold leading-[2.05] text-black">
+                <div className="border-[1.5px] border-black px-[4.5%] py-[4.5%] sm:px-[5.5%] sm:pt-[5%] sm:pb-[5%]">
+                  <p className="mb-4 text-[0.98rem] font-semibold leading-[1.8] text-black sm:mb-6 sm:text-[clamp(1.2rem,1.8vw,1.5rem)] sm:leading-[2.05]">
                     ※ 공통과목 및 자신이 선택한 과목의 문제지를 확인하고, 답을 정확히 표시하시오.
                   </p>
 
-                  <div className="space-y-8 text-[clamp(1.2rem,1.8vw,1.5rem)] font-medium leading-[2.05] text-black">
+                  <div className="space-y-5 text-[0.98rem] font-medium leading-[1.8] text-black sm:space-y-8 sm:text-[clamp(1.2rem,1.8vw,1.5rem)] sm:leading-[2.05]">
                     <div className="flex items-center gap-2 leading-none">
                       <span>• 공통과목</span>
                       <span className="min-w-0 flex-1 border-b border-dotted border-black/80" />
@@ -374,26 +374,26 @@ export default function LandingForm() {
                 </div>
 
                 {/* 에러 메시지 */}
-                {(audioError || submitError || policyError) && (
-                  <div className="mt-5 space-y-1">
-                    {audioError ? (
-                      <p className="text-[clamp(1rem,1.4vw,1.15rem)] text-red-600">{audioError}</p>
-                    ) : null}
-                    {submitError ? (
-                      <p className="text-[clamp(1rem,1.4vw,1.15rem)] text-red-600">{submitError}</p>
-                    ) : null}
-                    {policyError ? (
-                      <p className="text-[clamp(1rem,1.4vw,1.15rem)] text-red-600">{policyError}</p>
-                    ) : null}
-                  </div>
-                )}
+                  {(audioError || submitError || policyError) && (
+                    <div className="mt-4 space-y-1">
+                      {audioError ? (
+                        <p className="text-[0.92rem] text-red-600 sm:text-[clamp(1rem,1.4vw,1.15rem)]">{audioError}</p>
+                      ) : null}
+                      {submitError ? (
+                        <p className="text-[0.92rem] text-red-600 sm:text-[clamp(1rem,1.4vw,1.15rem)]">{submitError}</p>
+                      ) : null}
+                      {policyError ? (
+                        <p className="text-[0.92rem] text-red-600 sm:text-[clamp(1rem,1.4vw,1.15rem)]">{policyError}</p>
+                      ) : null}
+                    </div>
+                  )}
               </div>
 
               {/* 하단 버튼 */}
               <div className="mt-2 flex justify-center">
                 <Button
                   type="button"
-                  className="rounded-full border-[1.5px] border-black bg-transparent px-7 py-3 text-[clamp(1.2rem,1.8vw,1.5rem)] font-semibold !text-black hover:bg-transparent hover:!text-black disabled:opacity-40"
+                  className="rounded-full border-[1.5px] border-black bg-transparent px-5 py-2.5 text-[1rem] font-semibold !text-black hover:bg-transparent hover:!text-black disabled:opacity-40 sm:px-7 sm:py-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
                   onClick={() =>
                     runAudioFlow({
                       beforePlay: async () => {
