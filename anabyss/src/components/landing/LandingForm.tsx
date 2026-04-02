@@ -272,69 +272,77 @@ export default function LandingForm() {
                 </header>
 
                 {/* 입력 영역 */}
-                <div className="mb-6 grid grid-cols-1 gap-3 md:grid-cols-2 lg:mb-10 lg:gap-8">
-                  {/* 성명 */}
-                  <div className="flex flex-col gap-1.5 sm:gap-2">
-                    <div className="flex min-h-[3rem] items-stretch border-[1.5px] border-black sm:min-h-[3.55rem]">
-                      <label
-                        htmlFor="nickname"
-                        className="flex w-[6rem] shrink-0 items-center justify-center whitespace-nowrap border-r-[1.5px] border-black bg-[#D6DAE2] px-2 text-[0.98rem] font-semibold text-black sm:w-[7rem] sm:px-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
-                      >
-                        성명
-                      </label>
-                      <input
-                        id="nickname"
-                        type="text"
-                        value={nickname}
-                        onChange={(e) => handleNicknameChange(e.target.value)}
-                        onBlur={handleNicknameBlur}
-                        disabled={isNoticeOpen}
-                        className="min-w-0 flex-1 bg-[#EEF2F9] px-3 text-[0.98rem] font-medium leading-none text-black outline-none placeholder:text-[#6B7280] sm:px-4 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
-                      />
+                <div className="mb-6 lg:mb-10">
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:gap-8">
+                    {/* 성명 */}
+                    <div className="flex flex-col gap-1.5 sm:gap-2">
+                      <div className="flex min-h-[3rem] items-stretch border-[1.5px] border-black sm:min-h-[3.55rem]">
+                        <label
+                          htmlFor="nickname"
+                          className="flex w-[6rem] shrink-0 items-center justify-center whitespace-nowrap border-r-[1.5px] border-black bg-[#D6DAE2] px-2 text-[0.98rem] font-semibold text-black sm:w-[7rem] sm:px-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
+                        >
+                          성명
+                        </label>
+                        <input
+                          id="nickname"
+                          type="text"
+                          value={nickname}
+                          onChange={(e) => handleNicknameChange(e.target.value)}
+                          onBlur={handleNicknameBlur}
+                          disabled={isNoticeOpen}
+                          className="min-w-0 flex-1 bg-[#EEF2F9] px-3 text-[0.98rem] font-medium leading-none text-black outline-none placeholder:text-[#6B7280] sm:px-4 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
+                        />
+                      </div>
+
+                      {nicknameTouched ? (
+                        nicknameError ? (
+                          <p className="text-[clamp(1rem,1.4vw,1.15rem)] text-red-600">{nicknameError}</p>
+                        ) : isNicknameValid ? (
+                          <p className="text-[clamp(1rem,1.4vw,1.15rem)] text-green-700">
+                            사용 가능한 성명입니다.
+                          </p>
+                        ) : null
+                      ) : null}
                     </div>
 
-                    {nicknameTouched ? (
-                      nicknameError ? (
-                        <p className="text-[clamp(1rem,1.4vw,1.15rem)] text-red-600">{nicknameError}</p>
-                      ) : isNicknameValid ? (
-                        <p className="text-[clamp(1rem,1.4vw,1.15rem)] text-green-700">
-                          사용 가능한 성명입니다.
-                        </p>
-                      ) : null
-                    ) : null}
-                  </div>
+                    {/* 수험번호 */}
+                    <div className="flex flex-col gap-1.5 sm:gap-2">
+                      <div className="flex min-h-[3rem] items-stretch border-[1.5px] border-black sm:min-h-[3.55rem]">
+                        <label
+                          htmlFor="userNumber"
+                          className="flex w-[6rem] shrink-0 items-center justify-center whitespace-nowrap border-r-[1.5px] border-black bg-[#D6DAE2] px-2 text-[0.98rem] font-semibold text-black sm:w-[7rem] sm:px-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
+                        >
+                          수험번호
+                        </label>
+                        <input
+                          id="userNumber"
+                          type="text"
+                          value={userNumber}
+                          onChange={(e) => handleUserNumberChange(e.target.value)}
+                          onBlur={handleUserNumberBlur}
+                          disabled={isNoticeOpen}
+                          className="min-w-0 flex-1 bg-[#EEF2F9] px-3 text-[0.98rem] font-medium leading-none text-black outline-none placeholder:text-[#6B7280] sm:px-4 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
+                        />
+                      </div>
 
-                  {/* 수험번호 */}
-                  <div className="flex flex-col gap-1.5 sm:gap-2">
-                    <div className="flex min-h-[3rem] items-stretch border-[1.5px] border-black sm:min-h-[3.55rem]">
-                      <label
-                        htmlFor="userNumber"
-                        className="flex w-[6rem] shrink-0 items-center justify-center whitespace-nowrap border-r-[1.5px] border-black bg-[#D6DAE2] px-2 text-[0.98rem] font-semibold text-black sm:w-[7rem] sm:px-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
-                      >
-                        수험번호
-                      </label>
-                      <input
-                        id="userNumber"
-                        type="text"
-                        value={userNumber}
-                        onChange={(e) => handleUserNumberChange(e.target.value)}
-                        onBlur={handleUserNumberBlur}
-                        disabled={isNoticeOpen}
-                        className="min-w-0 flex-1 bg-[#EEF2F9] px-3 text-[0.98rem] font-medium leading-none text-black outline-none placeholder:text-[#6B7280] sm:px-4 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
-                      />
+                      {userNumberTouched ? (
+                        userNumberError ? (
+                          <p className="text-[clamp(1rem,1.4vw,1.15rem)] text-red-600">{userNumberError}</p>
+                        ) : isUserNumberValid ? (
+                          <p className="text-[clamp(1rem,1.4vw,1.15rem)] text-green-700">
+                            사용 가능한 수험번호입니다.
+                          </p>
+                        ) : null
+                      ) : null}
                     </div>
-
-                    {userNumberTouched ? (
-                      userNumberError ? (
-                        <p className="text-[clamp(1rem,1.4vw,1.15rem)] text-red-600">{userNumberError}</p>
-                      ) : isUserNumberValid ? (
-                        <p className="text-[clamp(1rem,1.4vw,1.15rem)] text-green-700">
-                          사용 가능한 수험번호입니다.
-                        </p>
-                      ) : null
-                    ) : null}
                   </div>
+
+                  {/* 힌트 텍스트 — grid 밖, 전체 너비 */}
+                  <p className="mt-3 text-[0.78rem] text-slate-400 sm:text-[0.82rem]">
+                    동일한 정보로 재접속하면 진행 중인 시험 또는 결과를 확인할 수 있습니다.
+                  </p>
                 </div>
+
 
                 {/* 안내 박스 1 */}
                 <div className="mb-4 border-[1.5px] border-black px-[4.5%] py-[4.5%] sm:mb-7 sm:px-[5.5%] sm:pt-[5%] sm:pb-[5%] lg:mb-9">
@@ -359,9 +367,8 @@ export default function LandingForm() {
                       • 총 4개 영역, 영역당 5문항이며 한 문항당 5점, 총 100점입니다. 
                     </li>
 
-                    <li>• 동일한 성명과 수험번호로 재접속하면 진행 중인 시험 또는 결과를 확인할 수 있습니다.</li>
-
                     <li>• 시험 시간은 20분이며, 시간 종료 시 자동으로 제출 됩니다.</li>
+
                   </ul>
                 </div>
 

@@ -11,8 +11,9 @@ type ResultPageProps = {
 };
 
 function formatDuration(seconds: number) {
-  const min = Math.floor(seconds / 60);
-  const sec = seconds % 60;
+  const capped = Math.min(seconds, 20 * 60);
+  const min = Math.floor(capped / 60);
+  const sec = capped % 60;
   return `${min}분 ${sec}초`;
 }
 

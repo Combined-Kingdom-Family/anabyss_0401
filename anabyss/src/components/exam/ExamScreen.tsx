@@ -56,7 +56,7 @@ export default function ExamScreen() {
 
     if (hasPlayedTenMinuteWarning) return;
 
-    if (remainingSeconds <= 600) {
+    if (remainingSeconds <= 600 && remainingSeconds >= 599) {
       markTenMinuteWarningPlayed();
 
       playAudio({
