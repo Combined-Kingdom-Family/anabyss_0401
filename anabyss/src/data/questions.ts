@@ -143,7 +143,7 @@ export const questions: Question[] = [
       type: "multiple", 
       imageUrl:"/images/dots.png", 
       questionText: "다음은 오웬의 신체적 특징에 대한 설명이다. 빈칸에 들어갈 말로 가장 적절한 것을 순서대로 고르시오.", 
-      choices: ["숙덩이, 2개, 26개", "숙댕이, 1개, 25개", "엉덩이, 1개, 25개", "엉덩이, 2개, 26개"], 
+      choices: ["1개, 숙덩이, 2개, 26개", "2개, 숙댕이, 1개, 26개", "1개, 엉덩이, 1개, 25개", "2개, 엉덩이, 1개, 26개"], 
       answer: 2, 
     }, 
     { 
@@ -160,7 +160,7 @@ export const questions: Question[] = [
       type: "multiple", 
       imageUrl:"/images/pink.png",
       questionText: "다음은 오웬의 하우두유두 색상이다. 제시된 색상과 일치하는 컬러 코드로 가장 적절한 것은 무엇인가?", 
-      choices: [ "luvU00", "qq0_0p", "cut3yy", "#f0dcdc"], 
+      choices: [ "luvU00", "qq0_0p", "cut3yy", "f0dcdc"], 
       answer: 3, 
     }, 
   ];

@@ -235,15 +235,15 @@ export default function ExamScreen() {
 
                     {/* 페이지 표시 */}
                     <div className="flex items-center justify-center">
-                      <div className="relative flex h-10 w-20 items-center justify-between border-[1.5px] border-black bg-transparent px-2.5 text-[1rem] font-medium sm:h-12 sm:w-24 sm:px-3 sm:text-[1.2rem]">
-                        <span className="relative z-10 -translate-y-[0.1rem] sm:-translate-y-[0.18rem]">
+                      <div className="relative flex h-11 w-24 items-center justify-between overflow-hidden border-[1.5px] border-black bg-transparent px-3 text-[1.05rem] font-semibold sm:h-12 sm:w-24 sm:px-3 sm:text-[1.2rem]">
+                        <span className="relative z-10 -translate-y-[0.08rem] sm:-translate-y-[0.18rem]">
                           {currentIndex + 1}
                         </span>
-                        <span className="relative z-10 translate-y-[0.1rem] sm:translate-y-[0.18rem]">
+                        <span className="relative z-10 translate-y-[0.08rem] sm:translate-y-[0.18rem]">
                           {questions.length}
                         </span>
 
-                        <span className="absolute inset-0">
+                        <span className="absolute inset-0 z-0 pointer-events-none">
                           <svg
                             viewBox="0 0 100 50"
                             className="h-full w-full"
