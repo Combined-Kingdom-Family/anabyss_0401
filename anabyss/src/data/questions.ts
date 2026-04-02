@@ -126,7 +126,7 @@ export const questions: Question[] = [
       area: "서사", 
       type: "multiple", 
       questionText: "다음 중 유년기 듀랜트가 당시 오웬을 부르던 방식으로 옳은 것은 무엇인가?", 
-      choices: ["엄마", "아빠", "숙", "부"], 
+      choices: ["엄마", "아빠", "냐", "부"], 
       answer: 3, 
     }, 
     { 
