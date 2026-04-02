@@ -9,7 +9,7 @@ import {
 import { findLatestExamResultByUserId } from "@/lib/queries/examResult";
 
 const EXAM_NUMBER = 20;
-const EXAM_DURATION_SECONDS = EXAM_NUMBER * 60 * 1.5;
+const EXAM_DURATION_SECONDS = EXAM_NUMBER * 60;
 
 export async function POST(request: Request) {
   try {

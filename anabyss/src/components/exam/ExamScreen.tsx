@@ -8,6 +8,7 @@ import { useAudioPlayer } from "@/hooks/useAudioPlayer";
 
 const AUDIO_SOURCES = {
   tenMinuteWarning: "/audio/reminding.mp3",
+  end: "/audio/end.mp3", 
 } as const;
 
 function formatTime(seconds: number) {
@@ -42,9 +43,17 @@ export default function ExamScreen() {
   } = useExamSession();
 
   const { audioRef, audioError, playAudio, handleEnded } = useAudioPlayer();
-
+  
   useEffect(() => {
     if (!isRestored) return;
+
+    if (remainingSeconds == 1) {
+
+      playAudio({
+        src: AUDIO_SOURCES.end,
+      });
+    }
+
     if (hasPlayedTenMinuteWarning) return;
 
     if (remainingSeconds <= 600) {
@@ -144,15 +153,15 @@ export default function ExamScreen() {
 
                   {/* 이미지 영역 */}
                   {currentQuestion.imageUrl ? (
-                    <div className="mb-4 border border-black bg-transparent sm:mb-10">
-                      {/* 모바일에서는 높이를 강하게 제한 */}
-                      <div className="relative h-[min(24dvh,12rem)] w-full sm:h-auto sm:aspect-[16/9] sm:min-h-[18rem] lg:min-h-[22rem]">
+                    <div className="mb-4 overflow-hidden border sm:mb-10">
+                      <div className="relative aspect-[1400/788] w-full">
                         <Image
                           src={currentQuestion.imageUrl}
                           alt={`question-${currentQuestion.id}`}
                           fill
-                          className="object-contain p-2 sm:p-4"
-                          sizes="(max-width: 640px) 100vw, 900px"
+                          className="object-cover"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 900px"
+                          priority={currentIndex === 0}
                         />
                       </div>
                     </div>
@@ -283,7 +292,9 @@ export default function ExamScreen() {
               <Button
                 type="button"
                 className="rounded-full border border-black bg-black px-4 py-2 text-[0.9rem] font-semibold text-white hover:opacity-90 disabled:opacity-40 sm:px-5 sm:text-sm"
-                onClick={() => handleSubmit(false)}
+                onClick={() => 
+                    handleSubmit(false)
+                  }
                 disabled={isSubmitting}
               >
                 제출하기

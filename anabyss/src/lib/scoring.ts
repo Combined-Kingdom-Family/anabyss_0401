@@ -2,7 +2,7 @@ import { questions } from "@/data/questions";
 import type { AreaScoreSummary, ExamAnswerMap, ExamArea } from "@/types/exam";
 
 const QUESTION_SCORE = 5;
-const AREAS: ExamArea[] = ["검불시", "1부", "2부", "3부"];
+const AREAS: ExamArea[] = ["설정", "인물", "서사", "세부"];
 
 export function calculateAreaSummaries(
   answers: ExamAnswerMap

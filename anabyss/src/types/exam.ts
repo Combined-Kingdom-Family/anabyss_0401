@@ -1,4 +1,4 @@
-export type ExamArea = "검불시" | "1부" | "2부" | "3부";
+export type ExamArea = "설정" | "인물" | "서사" | "세부";
 
 export type QuestionType = "multiple";
 

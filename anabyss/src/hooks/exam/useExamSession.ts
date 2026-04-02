@@ -11,7 +11,7 @@ import type {
 } from "@/types/exam";
 
 const EXAM_NUMBER = 20;
-const EXAM_DURATION_SECONDS = EXAM_NUMBER * 60 * 1.5;
+const EXAM_DURATION_SECONDS = EXAM_NUMBER * 60;
 
 function toAnswerMap(
   answersJson: Record<string, number> | undefined

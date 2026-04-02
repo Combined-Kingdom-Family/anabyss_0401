@@ -222,7 +222,7 @@ export default function LandingForm() {
                 {/* 상단 배지 */}
                 <div className="mb-8 sm:mb-10">
                   <span className="inline-flex rounded-full border-[1.5px] border-black px-3 py-1.5 font-serif text-[0.95rem] font-black tracking-[-0.02em] text-black sm:px-4 sm:py-2 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]">
-                    만우절 형
+                    종합형
                   </span>
                 </div>
 
@@ -243,7 +243,7 @@ export default function LandingForm() {
                     <div className="flex min-h-[3rem] items-stretch border-[1.5px] border-black sm:min-h-[3.55rem]">
                       <label
                         htmlFor="nickname"
-                        className="flex w-[4.7rem] shrink-0 items-center justify-center border-r-[1.5px] border-black bg-[#D6DAE2] px-2 text-[0.98rem] font-semibold text-black sm:w-[5.8rem] sm:px-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
+                        className="flex w-[6rem] shrink-0 items-center justify-center whitespace-nowrap border-r-[1.5px] border-black bg-[#D6DAE2] px-2 text-[0.98rem] font-semibold text-black sm:w-[7rem] sm:px-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
                       >
                         성명
                       </label>
@@ -274,7 +274,7 @@ export default function LandingForm() {
                     <div className="flex min-h-[3rem] items-stretch border-[1.5px] border-black sm:min-h-[3.55rem]">
                       <label
                         htmlFor="userNumber"
-                        className="flex w-[5.5rem] shrink-0 items-center justify-center border-r-[1.5px] border-black bg-[#D6DAE2] px-2 text-[0.98rem] font-semibold text-black sm:w-[6.8rem] sm:px-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
+                        className="flex w-[6rem] shrink-0 items-center justify-center whitespace-nowrap border-r-[1.5px] border-black bg-[#D6DAE2] px-2 text-[0.98rem] font-semibold text-black sm:w-[7rem] sm:px-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
                       >
                         수험번호
                       </label>
