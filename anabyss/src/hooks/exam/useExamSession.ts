@@ -88,7 +88,7 @@ export function useExamSession() {
         return false;
       }
 
-      localStorage.removeItem("examStartInfo");
+      sessionStorage.removeItem("examStartInfo");
       router.push(`/result/${data.resultPublicId}`);
       return true;
     } catch {
@@ -103,7 +103,7 @@ export function useExamSession() {
 
   // 1. examStartInfo 읽어서 서버 세션 기준으로 복구
   useEffect(() => {
-    const raw = localStorage.getItem("examStartInfo");
+    const raw = sessionStorage.getItem("examStartInfo");
 
     if (!raw) {
       router.push("/");
@@ -141,13 +141,13 @@ export function useExamSession() {
     if (!isRestored) return;
     if (!userId || !sessionId) return;
 
-    const raw = localStorage.getItem("examStartInfo");
+    const raw = sessionStorage.getItem("examStartInfo");
     if (!raw) return;
 
     try {
       const parsed = JSON.parse(raw) as ExamStartInfo;
 
-      localStorage.setItem(
+      sessionStorage.setItem(
         "examStartInfo",
         JSON.stringify({
           ...parsed,

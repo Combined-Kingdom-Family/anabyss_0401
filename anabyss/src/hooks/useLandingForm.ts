@@ -130,7 +130,7 @@ export function useLandingForm() {
       }
 
       if (data.mode === "start_exam" || data.mode === "resume_exam") {
-        localStorage.setItem(
+        sessionStorage.setItem(
           "examStartInfo",
           JSON.stringify({
             user: data.user,
