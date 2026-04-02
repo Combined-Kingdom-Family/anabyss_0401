@@ -264,7 +264,7 @@ export default function LandingForm() {
                 {/* 타이틀 */}
                 <header className="mb-6 text-center sm:mb-12 lg:mb-14">
                   <p className="text-[0.9rem] font-semibold tracking-[-0.02em] text-black sm:text-[clamp(1.3rem,2.2vw,2.1rem)]">
-                    2026학년도 4월 검불시 사설 모의고사 문제지
+                    2026학년도 4월 사설 모의고사 문제지
                   </p>
                   <h1 className="mt-2 font-serif text-[2.05rem] font-black tracking-[-0.04em] text-black [text-shadow:0_0_0.5px_rgba(0,0,0,0.8)] sm:mt-4 sm:text-[clamp(2.8rem,6vw,4.8rem)]">
                     검불시 영역
@@ -343,18 +343,22 @@ export default function LandingForm() {
 
                     <li>
                       • 문제지의 필적 확인란에 다음의 문구를 정자로 기재하시오.
-                      <div className="mt-4 flex justify-center">
-                        <div className="relative w-full max-w-[30rem]">
+                      <div className="mt-4 w-full">
+                        <div className="relative w-full">
                           <input
                             type="text"
                             value={phrase}
                             onChange={(e) => setPhrase(e.target.value)}
+                            onFocus={(e) => {
+                              const el = e.currentTarget;
+                              setTimeout(() => el.setSelectionRange(0, 0), 0);
+                            }}
                             disabled={isNoticeOpen}
                             className="w-full border-[1.5px] border-black bg-[#D6DAE2] px-3 py-2.5 text-[0.92rem] font-medium text-black outline-none sm:px-4 sm:py-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
                           />
 
                           {!phrase && (
-                            <span className="pointer-events-none absolute inset-0 flex items-center justify-center px-3 text-[0.86rem] font-medium text-[#6B7280] whitespace-nowrap overflow-hidden text-ellipsis sm:px-4 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]">
+                            <span className="pointer-events-none absolute inset-0 flex items-center justify-start px-3 text-[0.86rem] font-medium text-[#6B7280] overflow-hidden sm:px-4 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]">
                               듀랜트가 질척하게 오웬을 핥고 있었다
                             </span>
                           )}
@@ -362,9 +366,7 @@ export default function LandingForm() {
                       </div>
                     </li>
 
-                    <li>
-                      • 총 4개 영역, 영역당 5문항으로 구성되며 총 20문항 입니다. 
-                    </li>
+                    <li>• 총 4개 영역, 영역당 5문항으로 구성되며 총 20문항 입니다.</li>
 
                     <li>• 한 문항당 5점이며, 만점은 100점입니다.</li>
 
