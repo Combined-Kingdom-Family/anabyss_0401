@@ -46,7 +46,7 @@ export const questions: Question[] = [
     area: "서사", 
     type: "multiple", 
     questionText: "다음 중 키나드를 이용해 황제인 듀랜트를 시해하려 한 집단의 명칭으로 옳은 것은 무엇인가?", 
-    choices: ["루마사이트", "루머사이트", "루퍼사이트", "루시퍼일듯"], 
+    choices: ["루마사이트", "루퍼사이트", "루머사이트", "루시퍼일듯"], 
     answer: 1, 
   }, 
   { 

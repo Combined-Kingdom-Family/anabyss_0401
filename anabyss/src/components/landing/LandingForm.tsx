@@ -129,52 +129,87 @@ export default function LandingForm() {
                 <div className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold tracking-[0.02em] text-slate-600">
                   안내
                 </div>
-
+ 
                 <h2 className="mt-3 text-[clamp(1.4rem,2.4vw,1.8rem)] font-bold tracking-[-0.03em] text-slate-900">
-                  시험 안내 및 정보 이용 동의
+                  서비스 이용 안내
                 </h2>
-
+ 
                 <p className="mt-2 text-[clamp(1rem,1.4vw,1.15rem)] leading-6 text-slate-600 sm:text-[0.98rem]">
-                  시험을 시작하기 전에 아래 내용을 반드시 확인해 주세요. 확인을 완료한 뒤에만
-                  성명 및 수험번호 입력과 시험 시작이 가능합니다.
+                  시험을 시작하기 전, 아래 내용을 확인해 주세요.
                 </p>
               </div>
-
+ 
               <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4 sm:p-5">
-                <ul className="space-y-3 text-[clamp(1rem,1.4vw,1.15rem)] leading-6 text-slate-700 sm:text-[0.98rem]">
-                  <li>
-                    • 입력한 성명과 수험번호는 시험 진행, 응시자 식별 및 결과 확인을 위해
-                    사용됩니다.
+                <ul className="space-y-0 divide-y divide-slate-100 text-[clamp(1rem,1.4vw,1.15rem)] leading-6 text-slate-700 sm:text-[0.98rem]">
+ 
+                  {/* 항목 1: 개인정보 — 가장 중요, 최상단 */}
+                  <li className="py-3 first:pt-0 last:pb-0">
+                    <p className="font-semibold text-slate-900">개인정보 입력 주의</p>
+                    <p className="mt-0.5 text-slate-600 text-[0.95em]">
+                      성명과 수험번호에는 실제 개인정보를 입력하지 말아 주세요.
+                      응시자 구분 목적으로만 사용되며 자유롭게 설정할 수 있습니다.
+                    </p>
                   </li>
-                  <li>• 시험 시작 시 안내 음성이 재생될 수 있습니다.</li>
-                  <li>
-                    • 시험 진행 상태(문항, 답안, 남은 시간 등)는 복구를 위해 저장될 수
-                    있습니다.
+ 
+                  {/* 항목 2: 음성 */}
+                  <li className="py-3 first:pt-0 last:pb-0">
+                    <p className="font-semibold text-slate-900">안내 음성 자동 재생</p>
+                    <p className="mt-0.5 text-slate-600 text-[0.95em]">
+                      시험 시작 시 안내 음성이 자동으로 재생됩니다.
+                      공공장소나 조용한 환경에서는 음량을 미리 확인해 주세요.
+                    </p>
                   </li>
-                  <li>
-                    • 이미 시험을 제출한 경우, 동일한 정보로 재접속 시 결과 화면으로 이동할
-                    수 있습니다.
+ 
+                  {/* 항목 3: 스포일러 */}
+                  <li className="py-3 first:pt-0 last:pb-0">
+                    <p className="font-semibold text-slate-900">스포일러 포함</p>
+                    <p className="mt-0.5 text-slate-600 text-[0.95em]">
+                      일부 문제는 작품 내용의 스포일러를 포함하고 있습니다.
+                      작품을 완전히 접하지 않은 경우 유의해 주세요.
+                    </p>
                   </li>
-                  <li>
-                    • 응시 결과는 개인을 식별할 수 없는 형태로 통계 처리되어, 랭킹, 전체
-                    응시자 수, 영역별 성적 요약 정보 제공에 활용될 수 있습니다.
+ 
+                  {/* 항목 4: 진행 상태 저장 */}
+                  <li className="py-3 first:pt-0 last:pb-0">
+                    <p className="font-semibold text-slate-900">진행 상태 자동 저장</p>
+                    <p className="mt-0.5 text-slate-600 text-[0.95em]">
+                      문항, 답안, 남은 시간 등 진행 상태는 자동 저장됩니다.
+                      페이지 이탈 시 일부 상태가 초기화될 수 있습니다.
+                    </p>
                   </li>
+ 
+                  {/* 항목 5: 재접속 */}
+                  <li className="py-3 first:pt-0 last:pb-0">
+                    <p className="font-semibold text-slate-900">재접속 시 결과 화면으로 이동</p>
+                    <p className="mt-0.5 text-slate-600 text-[0.95em]">
+                      이미 제출한 경우, 동일한 성명과 수험번호로 재접속하면 결과 화면으로 이동합니다.
+                    </p>
+                  </li>
+ 
+                  {/* 항목 6: 통계 */}
+                  <li className="py-3 first:pt-0 last:pb-0">
+                    <p className="font-semibold text-slate-900">결과 통계 활용</p>
+                    <p className="mt-0.5 text-slate-600 text-[0.95em]">
+                      응시 결과는 개인을 식별할 수 없는 형태로 집계되어
+                      랭킹, 전체 응시자 수, 영역별 성적 요약 제공에 활용될 수 있습니다.
+                    </p>
+                  </li>
+ 
                 </ul>
-
+ 
+                {/* 파란 강조 박스: 팬메이드 명시 + 개인정보 금지 핵심 반복 */}
                 <div className="mt-4 rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3">
                   <p className="text-[clamp(1rem,1.4vw,1.15rem)] leading-6 text-indigo-900 sm:text-[0.97rem]">
                     <span className="font-semibold">
-                      ※ 본 시험은 이벤트용 서비스로 실제 개인정보 수집을 목적으로 하지
-                      않습니다.
+                      ※ 본 시험은 팬메이드 이벤트 콘텐츠로, 실제 개인정보 수집을 목적으로 하지 않습니다.
                     </span>
                     <br />
-                    성명 및 수험번호에는{" "}
-                    <span className="font-semibold">닉네임 또는 임의의 값 입력</span>을
-                    권장합니다.
+                    성명과 수험번호에는{" "}
+                    <span className="font-semibold">실제 개인정보를 입력하지 말아 주세요.</span>
                   </p>
                 </div>
               </div>
-
+ 
               <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-4 transition hover:border-slate-300 hover:bg-slate-50/70">
                 <input
                   type="checkbox"
@@ -183,11 +218,10 @@ export default function LandingForm() {
                   className="mt-1 h-4 w-4 shrink-0 rounded border-slate-300 text-slate-900 focus:ring-slate-400"
                 />
                 <span className="text-[clamp(1rem,1.4vw,1.15rem)] leading-6 text-slate-700 sm:text-[0.98rem]">
-                  위 내용을 모두 확인하였으며, 시험 진행을 위한 정보 이용 및 안내 절차,
-                  그리고 통계성 정보 제공 목적의 집계 활용에 동의합니다.
+                  위 내용을 확인하였으며, 서비스 이용 및 통계 집계 활용에 동의합니다.
                 </span>
               </label>
-
+ 
               <div className="mt-6 flex justify-center">
                 <button
                   type="button"
@@ -207,6 +241,7 @@ export default function LandingForm() {
           </div>
         </div>
       ) : null}
+ 
 
       <main className="min-h-screen bg-[#F1F3FB] px-2 py-2 sm:px-5 sm:py-5 lg:px-6 lg:py-6">
         <audio ref={audioRef} onEnded={handleEnded} preload="auto" />
@@ -307,7 +342,7 @@ export default function LandingForm() {
                     <li>• 문제지의 해당란에 성명과 수험 번호를 정확히 쓰시오.</li>
 
                     <li>
-                      • 답안지의 필적 확인란에 다음의 문구를 정자로 기재하시오.
+                      • 문제지의 필적 확인란에 다음의 문구를 정자로 기재하시오.
                       <div className="mt-4 flex justify-center">
                         <input
                           type="text"
@@ -321,11 +356,12 @@ export default function LandingForm() {
                     </li>
 
                     <li>
-                      • 답안지의 해당란에 성명과 수험 번호를 쓰고, 또 수험 번호와 답을
-                      정확히 표시하시오.
+                      • 총 4개 영역, 영역당 5문항으로 구성되며 총 20문항 입니다. 
                     </li>
 
-                    <li>• 총 20개 문항, 한 문항 당 5점 입니다.</li>
+                    <li>• 한 문항당 5점이며, 만점은 100점입니다.</li>
+
+                    <li>• 총 시험 시간은 20분이며, 시간 종료 시 자동 제출 됩니다.</li>
                   </ul>
                 </div>
 
