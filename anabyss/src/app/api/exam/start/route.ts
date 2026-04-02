@@ -18,6 +18,7 @@ export async function POST(request: Request) {
     const nickname = body.nickname?.trim() ?? "";
     const userNumber = body.userNumber?.trim() ?? "";
     const agreedToPolicy = body.agreedToPolicy;
+    const handwritingSample = body.handwritingSample?.trim().slice(0, 200) ?? "";
 
     const nicknameError = validateNickname(nickname);
     if (nicknameError) {
@@ -75,6 +76,7 @@ export async function POST(request: Request) {
     const newSession = await createExamSession({
       userId: user.id,
       remainingSeconds: EXAM_DURATION_SECONDS,
+      handwritingSample,
     });
 
     return NextResponse.json({

@@ -14,4 +14,5 @@ export type StartExamRequest = {
   nickname: string;
   userNumber: string;
   agreedToPolicy: boolean;
+  handwritingSample: string;
 };

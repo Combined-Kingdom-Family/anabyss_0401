@@ -27,9 +27,6 @@ export default function LandingForm() {
   const [isNoticeOpen, setIsNoticeOpen] = useState(true);
   const [noticeAgreed, setNoticeAgreed] = useState(false);
 
-  // 필적 확인 문구
-  const [phrase, setPhrase] = useState("");
-
   const {
     nickname,
     userNumber,
@@ -53,6 +50,9 @@ export default function LandingForm() {
     handleUserNumberBlur,
     handlePolicyChange,
     handleStartExam,
+
+    handwritingSample, 
+    handleHandwritingSampleChange
   } = useLandingForm();
 
   const {
@@ -309,21 +309,14 @@ export default function LandingForm() {
                     <li>
                       • 답안지의 필적 확인란에 다음의 문구를 정자로 기재하시오.
                       <div className="mt-4 flex justify-center">
-                        <div className="relative w-full max-w-[30rem]">
-                          <input
-                            type="text"
-                            value={phrase}
-                            onChange={(e) => setPhrase(e.target.value)}
-                            disabled={isNoticeOpen}
-                            className="w-full border-[1.5px] border-black bg-[#D6DAE2] px-3 py-2.5 text-[0.92rem] font-medium text-black outline-none sm:px-4 sm:py-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
-                          />
-
-                          {!phrase && (
-                            <span className="pointer-events-none absolute inset-0 flex items-center justify-center px-3 text-[0.86rem] font-medium text-[#6B7280] whitespace-nowrap overflow-hidden text-ellipsis sm:px-4 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]">
-                              듀랜트가 질척하게 오웬을 핥고 있었다
-                            </span>
-                          )}
-                        </div>
+                        <input
+                          type="text"
+                          value={handwritingSample}
+                          onChange={(e) => handleHandwritingSampleChange(e.target.value)}
+                          disabled={isNoticeOpen}
+                          placeholder="듀랜트가 질척하게 오웬을 핥고 있었다"
+                          className="w-full border-[1.5px] border-black bg-[#D6DAE2] px-3 py-2.5 text-[0.92rem] font-medium text-black outline-none placeholder:text-[#6B7280] sm:px-4 sm:py-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
+                        />
                       </div>
                     </li>
 

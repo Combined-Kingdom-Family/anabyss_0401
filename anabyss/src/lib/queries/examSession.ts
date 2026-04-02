@@ -73,15 +73,18 @@ export async function findInProgressSessionByUserId(
 export async function createExamSession(params: {
   userId: number;
   remainingSeconds: number;
+  handwritingSample?: string;
 }): Promise<ExamSession> {
   const rows = await sql`
     INSERT INTO exam_sessions (
       user_id,
-      remaining_seconds
+      remaining_seconds,
+      handwriting_sample
     )
     VALUES (
       ${params.userId},
-      ${params.remainingSeconds}
+      ${params.remainingSeconds},
+      ${params.handwritingSample ?? ""}
     )
     RETURNING
       id,

@@ -33,6 +33,13 @@ export function useLandingForm() {
   const isUserNumberValid =
     userNumber.trim() !== "" && !userNumberValidationMessage;
 
+  const [handwritingSample, setHandwritingSample] = useState("");
+
+  const handleHandwritingSampleChange = (value: string) => {
+    setHandwritingSample(value);
+  };
+
+
   const handleNicknameChange = (value: string) => {
     setNickname(value);
 
@@ -90,6 +97,7 @@ export function useLandingForm() {
       nickname: nickname.trim(),
       userNumber: userNumber.trim(),
       agreedToPolicy,
+      handwritingSample: handwritingSample.trim(),
     };
 
     try {
@@ -112,24 +120,6 @@ export function useLandingForm() {
         return { ok: false };
       }
 
-      /**
-       * 서버 응답 예시
-       * 1) 새 시험 or 이어하기
-       * {
-       *   success: true,
-       *   mode: "start_exam" | "resume_exam",
-       *   user: {...},
-       *   session: {...}
-       * }
-       *
-       * 2) 이미 제출한 사용자
-       * {
-       *   success: true,
-       *   mode: "go_result",
-       *   user: {...},
-       *   resultPublicId: "uuid..."
-       * }
-       */
 
       if (data.mode === "go_result") {
         return {
@@ -169,6 +159,7 @@ export function useLandingForm() {
     nickname,
     userNumber,
     agreedToPolicy,
+    handwritingSample,
 
     nicknameError,
     userNumberError,
@@ -188,5 +179,7 @@ export function useLandingForm() {
     handleUserNumberBlur,
     handlePolicyChange,
     handleStartExam,
+    handleHandwritingSampleChange,
+
   };
 }
