@@ -78,7 +78,7 @@ export default async function ResultPage({ params }: ResultPageProps) {
         <section className="relative border-[1.5px] border-black bg-[#FFFFFF] px-[4.5%] py-[4.5%]">
           <div className="relative mx-auto w-full max-w-[62rem]">
             {/* 워터마크 */}
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
               <div className="relative flex flex-col items-center justify-center">
                 <div className="relative h-[12rem] w-[12rem] opacity-[0.14] sm:h-[15rem] sm:w-[15rem]">
                   <Image
@@ -187,7 +187,7 @@ export default async function ResultPage({ params }: ResultPageProps) {
                         {item.summary?.score ?? 0}
                       </div>
 
-                      <div className="border-r-[1.5px] border-black px-4 py-3 text-center text-[1rem] font-semibold text-black">
+                      <div className="border-r-[1.5px] border-black bg-[#D6DAE2] px-4 py-3 text-center text-[1rem] font-semibold text-black">
                         등급
                       </div>
                       <div className="px-4 py-3 text-center text-[1.15rem] font-medium text-black">
@@ -290,7 +290,7 @@ export default async function ResultPage({ params }: ResultPageProps) {
               {/* 기관명 + 하트 도장 */}
               <div className="mt-8 sm:mt-10">
                 <div className="relative flex w-full items-center justify-center">
-                  <div className="absolute left-1/2 top-1/2 h-16 w-16 -translate-y-1/2 translate-x-[8.8rem] opacity-55 sm:h-20 sm:w-20 sm:translate-x-[13rem]">
+                  <div className="absolute left-1/2 top-1/2 h-14 w-14 z-20 -translate-y-1/2 translate-x-[4.5rem] opacity-55 sm:h-20 sm:w-20 sm:translate-x-[13rem]">
                     <Image
                       src="/images/stamp.png"
                       alt="도장"
@@ -299,7 +299,7 @@ export default async function ResultPage({ params }: ResultPageProps) {
                     />
                   </div>
 
-                  <p className="relative z-10 text-center font-serif text-[clamp(1.15rem,3.8vw,1.95rem)] tracking-[0.08em] text-black sm:tracking-[0.22em]">
+                  <p className="relative z-10 whitespace-nowrap text-center font-serif text-[clamp(1.05rem,3.2vw,1.85rem)] tracking-[0.04em] text-black sm:tracking-[0.22em]">
                     C K 사 설 교 육 과 정 평 가 원 장
                   </p>
                 </div>

@@ -178,10 +178,10 @@ export default function ExamScreen() {
                           type="button"
                           onClick={() => handleSelectAnswer(index)}
                           disabled={isSubmitting}
-                          className="flex w-full items-start gap-3 rounded-xl px-2 py-2 text-left sm:gap-5 sm:px-4 sm:py-3"
+                          className="flex w-full items-center gap-3 rounded-xl px-2 py-2 text-left sm:gap-5 sm:px-4 sm:py-3"
                         >
                           <span
-                            className={`mt-[0.05em] inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-[0.95rem] font-semibold transition sm:h-11 sm:w-11 sm:text-lg ${
+                            className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-[0.95rem] font-semibold leading-none transition sm:h-11 sm:w-11 sm:text-lg ${
                               isSelected
                                 ? "border-blue-700 bg-blue-700 text-white"
                                 : "border-black bg-transparent text-black"
@@ -190,7 +190,7 @@ export default function ExamScreen() {
                             {index + 1}
                           </span>
 
-                          <span className="pt-[0.02em] text-[0.95rem] font-medium leading-[1.55] text-black sm:pt-[0.08em] sm:text-[clamp(1.15rem,1.6vw,1.35rem)] sm:leading-[1.85]">
+                          <span className="text-[0.95rem] font-medium leading-[1.55] text-black sm:text-[clamp(1.15rem,1.6vw,1.35rem)] sm:leading-[1.85]">
                             {choice}
                           </span>
                         </button>
