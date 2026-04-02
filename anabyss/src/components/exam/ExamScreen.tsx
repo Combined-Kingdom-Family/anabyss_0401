@@ -47,12 +47,12 @@ export default function ExamScreen() {
   useEffect(() => {
     if (!isRestored) return;
 
-    if (remainingSeconds == 1) {
+    // if (remainingSeconds == 1) {
 
-      playAudio({
-        src: AUDIO_SOURCES.end,
-      });
-    }
+    //   playAudio({
+    //     src: AUDIO_SOURCES.end,
+    //   });
+    // }
 
     if (hasPlayedTenMinuteWarning) return;
 

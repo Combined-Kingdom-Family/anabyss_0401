@@ -264,7 +264,7 @@ export default function LandingForm() {
                 {/* 타이틀 */}
                 <header className="mb-6 text-center sm:mb-12 lg:mb-14">
                   <p className="text-[0.9rem] font-semibold tracking-[-0.02em] text-black sm:text-[clamp(1.3rem,2.2vw,2.1rem)]">
-                    2026학년도 4월 검불시 사설 모의고사 문제지
+                    2026학년도 4월 사설 모의고사 문제지
                   </p>
                   <h1 className="mt-2 font-serif text-[2.05rem] font-black tracking-[-0.04em] text-black [text-shadow:0_0_0.5px_rgba(0,0,0,0.8)] sm:mt-4 sm:text-[clamp(2.8rem,6vw,4.8rem)]">
                     검불시 영역
@@ -356,12 +356,12 @@ export default function LandingForm() {
                     </li>
 
                     <li>
-                      • 총 4개 영역, 영역당 5문항으로 구성되며 총 20문항 입니다. 
+                      • 총 4개 영역, 영역당 5문항이며 한 문항당 5점, 총 100점입니다. 
                     </li>
 
-                    <li>• 한 문항당 5점이며, 만점은 100점입니다.</li>
+                    <li>• 동일한 성명과 수험번호로 재접속하면 진행 중인 시험 또는 결과를 확인할 수 있습니다.</li>
 
-                    <li>• 총 시험 시간은 20분이며, 시간 종료 시 자동 제출 됩니다.</li>
+                    <li>• 시험 시간은 20분이며, 시간 종료 시 자동으로 제출 됩니다.</li>
                   </ul>
                 </div>
 
