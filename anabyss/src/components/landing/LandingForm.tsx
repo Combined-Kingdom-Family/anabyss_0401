@@ -60,6 +60,7 @@ export default function LandingForm() {
     audioError,
     isPlaying,
     playAudio,
+    resetAudio,
     handleEnded,
   } = useAudioPlayer();
 
@@ -430,7 +431,8 @@ export default function LandingForm() {
                 <Button
                   type="button"
                   className="rounded-full border-[1.5px] border-black bg-transparent px-5 py-2.5 text-[1rem] font-semibold !text-black hover:bg-transparent hover:!text-black disabled:opacity-40 sm:px-7 sm:py-3 sm:text-[clamp(1.2rem,1.8vw,1.5rem)]"
-                  onClick={() =>
+                  onClick={() => {
+                    resetAudio(); 
                     runAudioFlow({
                       beforePlay: async () => {
                         const result =
@@ -457,9 +459,9 @@ export default function LandingForm() {
                       afterEnded: () => {
                         router.push("/exam");
                       },
-                    })
-                  }
-                  disabled={isNoticeOpen || isSubmitting || isPlaying}
+                    });
+                  }}
+                  disabled={isNoticeOpen || isSubmitting}
                 >
                   시험 시작
                 </Button>
