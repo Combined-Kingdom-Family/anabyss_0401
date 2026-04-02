@@ -348,7 +348,7 @@ export default function LandingForm() {
                 {/* 안내 박스 1 */}
                 <div className="mb-4 border-[1.5px] border-black px-[4.5%] py-[4.5%] sm:mb-7 sm:px-[5.5%] sm:pt-[5%] sm:pb-[5%] lg:mb-9">
                   <ul className="space-y-5 text-[0.98rem] font-medium leading-[1.8] text-black sm:space-y-8 sm:text-[clamp(1.2rem,1.8vw,1.5rem)] sm:leading-[2.05]">
-                    <li>• 문제지의 해당란에 성명과 수험 번호를 정확히 쓰시오.</li>
+                    <li>• 문제지의 해당란에 성명과 수험번호를 정확히 쓰시오.</li>
 
                     <li>
                       • 문제지의 필적 확인란에 다음의 문구를 정자로 기재하시오.
